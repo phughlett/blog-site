@@ -12,7 +12,7 @@ export default function CreateAccount() {
   const [password, setPassword] = useState();
 
 
-  let { createAccount } = useContext(AppContext);
+  let { createAccount, linkStyle } = useContext(AppContext);
   let navigate = useNavigate();
 
   let handleSubmit = (e) => {
@@ -22,10 +22,7 @@ export default function CreateAccount() {
 
   }
 
-  const linkStyle = {
-    color: '#61dafb',
-    margin: '1em'
-  }
+
 
 
   return (

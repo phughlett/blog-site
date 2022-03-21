@@ -9,7 +9,7 @@ export default function Login(){
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
 
-  let {login} = useContext(AppContext);
+  let {login, linkStyle} = useContext(AppContext);
   let navigate = useNavigate();
 
   let handleSubmit = (e) => {
@@ -18,10 +18,7 @@ export default function Login(){
     .then(() => navigate(`/${username}`))
   }
 
-  const linkStyle = {
-    color: '#61dafb',
-    margin: '1em'
-  }
+
 
 
   return(

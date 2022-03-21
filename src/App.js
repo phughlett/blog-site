@@ -5,15 +5,22 @@ import AppContext from './context/AppContext';
 import Login from './views/login/Login';
 import CreateAccount from './views/createaccount/CreateAccount';
 import UserHomePage from './views/userHomePage/UserHomePage';
+import Homepage from './views/homepage/Homepage';
 
 
 function App() {
 
   const BASE_URL = 'http://localhost:8080'
 
-  const [userAuthenticated, setUserAuthenticated] = useState(false);
+
   const [user, setUser] = useState([]);
   const [routeURL, setRouteURL] = useState('/login')
+
+
+  const linkStyle = {
+    color: '#61dafb',
+    margin: '1em'
+  }
 
 
 
@@ -35,9 +42,10 @@ function App() {
       setRouteURL(data[0].username)
 
     })
-    .then(() => setUserAuthenticated(true))
-
-    .catch(err => console.log(err))
+    .catch(err => {
+      let error = err.json();
+      console.log(error)
+    })
 
 
   }
@@ -102,8 +110,8 @@ function App() {
   let contextObj = {
     login,
     createAccount,
-    userAuthenticated,
-    user
+    user,
+    linkStyle
 
   }
 
@@ -113,7 +121,7 @@ function App() {
     <AppContext.Provider value={contextObj}>
 
       <Routes>
-        <Route path='/' element={<PlaceholderPage />} />
+        <Route path='/' element={<Homepage />} />
         <Route path='/login' element={<Login />} />
         <Route path={routeURL} element={<UserHomePage />} />
         <Route path='/signup' element={<CreateAccount />} />

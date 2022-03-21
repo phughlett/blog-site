@@ -8,14 +8,12 @@ export default function UserHomePage() {
 
 
 
-  let { userAuthenticated, user } = useContext(AppContext);
+  let {user, linkStyle } = useContext(AppContext);
 
 
-
-
-  if (userAuthenticated) {
 
     return (
+
       <div className="user-homepage">
         <p>This is an authenticated User homepage.</p>
         <p>Hello, {user.first_name} {user.last_name}</p>
@@ -23,20 +21,5 @@ export default function UserHomePage() {
       </div>
 
     )
-  } else {
-
-
-    return (
-      <div>
-        <Link to="/login">Sign in here!</Link>
-      </div>
-
-    )
-  }
-
-
-
-
-
 
 }
