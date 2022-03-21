@@ -15,11 +15,12 @@ export default function Login(){
   let handleSubmit = (e) => {
     e.preventDefault();
     login(username, password)
-    .then(() => navigate('/home'))
+    .then(() => navigate(`/${username}`))
   }
 
   const linkStyle = {
-    color: '#61dafb'
+    color: '#61dafb',
+    margin: '1em'
   }
 
 

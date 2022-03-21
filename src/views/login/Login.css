@@ -17,7 +17,6 @@
   padding: 15px 25px;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
   font-size: 18px;
   float: right;
   margin-top: 1em;
@@ -25,8 +24,6 @@
 
 
 label{
-  display: inline-block;
-  float: left;
   clear: left;
   width: 250px;
   text-align: right;

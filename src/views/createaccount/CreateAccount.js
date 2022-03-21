@@ -22,6 +22,11 @@ export default function CreateAccount() {
 
   }
 
+  const linkStyle = {
+    color: '#61dafb',
+    margin: '1em'
+  }
+
 
   return (
     <div className="login">
@@ -37,6 +42,7 @@ export default function CreateAccount() {
         <input type="password" required onChange={e => setPassword(e.target.value)}></input><br />
         <button type="submit" className="button-login">Sign Up</button>
       </form>
+      <Link style={linkStyle} to="/login">Already have an Account?  Sign in here</Link>
       <br />
 
     </div>

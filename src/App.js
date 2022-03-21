@@ -1,17 +1,20 @@
 import './App.css';
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import AppContext from './context/AppContext';
 import Login from './views/login/Login';
 import CreateAccount from './views/createaccount/CreateAccount';
+import UserHomePage from './views/userHomePage/UserHomePage';
 
 
 function App() {
 
   const BASE_URL = 'http://localhost:8080'
 
-  const [loginBool, setLoginBool] = useState(false);
+  const [userAuthenticated, setUserAuthenticated] = useState(false);
   const [user, setUser] = useState([]);
+  const [routeURL, setRouteURL] = useState('/login')
+
 
 
   function login(username, password) {
@@ -27,8 +30,12 @@ function App() {
       body
     })
     .then(response => response.json())
-    .then(data => setUser(data))
-    .then(() => setLoginBool(true))
+    .then((data) => {
+      setUser(data[0])
+      setRouteURL(data[0].username)
+
+    })
+    .then(() => setUserAuthenticated(true))
 
     .catch(err => console.log(err))
 
@@ -76,9 +83,27 @@ function App() {
 
   }
 
+  function NoMatch() {
+
+    const linkStyle = {
+      color: '#61dafb',
+      margin: '1em'
+    }
+    return (
+      <div className="App-header">
+        <h2>You must be lost!</h2>
+        <p>
+          <Link style={linkStyle} to="/">Go to the home page</Link>
+        </p>
+      </div>
+    )
+  }
+
   let contextObj = {
     login,
-    createAccount
+    createAccount,
+    userAuthenticated,
+    user
 
   }
 
@@ -90,8 +115,9 @@ function App() {
       <Routes>
         <Route path='/' element={<PlaceholderPage />} />
         <Route path='/login' element={<Login />} />
-        <Route path='/home' element={<PlaceholderPage />} />
+        <Route path={routeURL} element={<UserHomePage />} />
         <Route path='/signup' element={<CreateAccount />} />
+        <Route path="*" element={<NoMatch />} />
       </Routes>
     </AppContext.Provider>
 
