@@ -6,21 +6,40 @@ import Login from './views/login/Login';
 import CreateAccount from './views/createaccount/CreateAccount';
 import UserHomePage from './views/userHomePage/UserHomePage';
 import Homepage from './views/homepage/Homepage';
+import SinglePost from './views/singlepost/SinglePost';
 
 
 function App() {
 
   const BASE_URL = 'http://localhost:8080'
+  const APP_BASE_URL = 'http://localhost:3000'
+  const navigate = useNavigate();
 
 
   const [user, setUser] = useState([]);
   const [routeURL, setRouteURL] = useState('/login')
+  const [posts, setPosts] = useState([]);
 
 
   const linkStyle = {
     color: '#61dafb',
     margin: '1em'
   }
+
+
+  useEffect(() => {
+
+    fetch(`${BASE_URL}/posts`,{
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then(data => data.reverse())
+    .then(reverse => setPosts(reverse))
+    .catch(err => console.log(err))
+  }, [])
 
 
 
@@ -46,7 +65,6 @@ function App() {
       let error = err.json();
       console.log(error)
     })
-
 
   }
 
@@ -111,7 +129,13 @@ function App() {
     login,
     createAccount,
     user,
-    linkStyle
+    linkStyle,
+    BASE_URL,
+    posts,
+    routeURL,
+    APP_BASE_URL,
+    setPosts,
+    navigate
 
   }
 
@@ -126,6 +150,7 @@ function App() {
         <Route path={routeURL} element={<UserHomePage />} />
         <Route path='/signup' element={<CreateAccount />} />
         <Route path="*" element={<NoMatch />} />
+        <Route path="/:id" element={<SinglePost/>} />
       </Routes>
     </AppContext.Provider>
 
