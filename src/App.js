@@ -12,7 +12,7 @@ import SinglePost from './views/singlepost/SinglePost';
 function App() {
 
   const BASE_URL = 'https://blogsite-backend-sdi08.herokuapp.com'
-  const APP_BASE_URL = 'http://localhost:3000'
+  const APP_BASE_URL = 'https://main.d2ozcvlq8y7tm5.amplifyapp.com'
   const navigate = useNavigate();
 
 
