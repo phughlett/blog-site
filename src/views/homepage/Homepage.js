@@ -29,7 +29,7 @@ export default function Homepage() {
 
     <div className="basic-homepage">
     <p>
-      Welcome to the Dog Blog {user.id > 0 ? <><Link style={linkStyle} to={routeURL}>View your posts</Link> Welcome, {user.first_name} {user.last_name}</> : <><Link style={linkStyle} to="/login">Login Here</Link> <Link style={linkStyle} to="/create">Create an Account</Link></>}
+      Welcome to the Dog Blog {user.id > 0 ? <><Link style={linkStyle} to={routeURL}>View your posts</Link> Welcome, {user.first_name} {user.last_name}</> : <><Link style={linkStyle} to="/login">Login Here</Link> <Link style={linkStyle} to="/signup">Create an Account</Link></>}
     </p>
 
 
