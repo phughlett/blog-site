@@ -63,13 +63,14 @@ export default function UserHomePage() {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    maxWidth: 400,
     bgcolor: '#30333a',
     border: 'solid 1px rgb(138 165 162 / 36%)',
     boxShadow: 24,
     pt: 2,
     px: 4,
-    pb: 3
+    pb: 3,
+    minWidth: 345
   };
 
 
@@ -112,13 +113,13 @@ export default function UserHomePage() {
                 }}>
                   Title
                 </label>
-                <input style={{ backgroundColor: '#30333a', color: 'white', width: '394px' }} required placeholder={newPostTitle} onChange={(e) => setNewPostTitle(e.target.value)}></input><br />
+                <input style={{ backgroundColor: '#30333a', color: 'white', width: '330px' }} required placeholder={newPostTitle} onChange={(e) => setNewPostTitle(e.target.value)}></input><br />
                 <label style={{
                   textAlign: 'left',
                   color: 'white',
                   fontFamily: '"Roboto","Helvetica","Arial",sans-serif'
                 }}>Content </label>
-                <textarea style={{ backgroundColor: '#30333a', color: 'white', fontFamily: '"Roboto","Helvetica","Arial",sans-serif', width: '394px', height: '186px', resize: 'none' }} value={newPostContent} onChange={(e) => setNewPostContent(e.target.value)} /><br />
+                <textarea style={{ backgroundColor: '#30333a', color: 'white', fontFamily: '"Roboto","Helvetica","Arial",sans-serif', width: '330px', height: '186px', resize: 'none' }} value={newPostContent} onChange={(e) => setNewPostContent(e.target.value)} /><br />
                 <Button variant="contained" color="success" type="submit" onClick={(e) => newPost(e)}>Submit</Button>
               </form>
             </Typography>
