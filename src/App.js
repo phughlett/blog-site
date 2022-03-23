@@ -11,7 +11,7 @@ import SinglePost from './views/singlepost/SinglePost';
 
 function App() {
 
-  const BASE_URL = 'http://localhost:8080'
+  const BASE_URL = 'https://blogsite-backend-sdi08.herokuapp.com'
   const APP_BASE_URL = 'http://localhost:3000'
   const navigate = useNavigate();
 
@@ -19,6 +19,7 @@ function App() {
   const [user, setUser] = useState([]);
   const [routeURL, setRouteURL] = useState('/login')
   const [posts, setPosts] = useState([]);
+  const [userPosts, setUserPosts] = useState([]);
 
 
   const linkStyle = {
@@ -135,7 +136,9 @@ function App() {
     routeURL,
     APP_BASE_URL,
     setPosts,
-    navigate
+    navigate,
+    userPosts,
+    setUserPosts
 
   }
 

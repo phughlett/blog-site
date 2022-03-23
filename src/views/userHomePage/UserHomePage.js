@@ -12,17 +12,17 @@ import Box from '@mui/material/Box';
 
 export default function UserHomePage() {
 
-  const [userPosts, setUserPosts] = useState([]);
+
   const [newPostTitle, setNewPostTitle] = useState('')
   const [newPostContent, setNewPostContent] = useState('')
 
-  let { user, linkStyle, BASE_URL } = useContext(AppContext);
+  let { user, linkStyle, BASE_URL, userPosts, setUserPosts } = useContext(AppContext);
 
   let newPost = (e) => {
     let title = newPostTitle;
     let content = newPostContent;
 
-    let body = JSON.stringify({title, content});
+    let body = JSON.stringify({ title, content });
     e.preventDefault();
 
     fetch(`${BASE_URL}/users/${user.id}/posts`, {
@@ -32,11 +32,21 @@ export default function UserHomePage() {
       },
       body
     })
-    .then(() => {
-      handleClose()
-      setNewPostTitle('')
-      setNewPostContent('')
-    })
+      .then(() => {
+        handleClose()
+        setNewPostTitle('')
+        setNewPostContent('')
+        fetch(`${BASE_URL}/users/${user.id}/posts`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(data => data.reverse())
+          .then(reverse => setUserPosts(reverse))
+          .catch(err => console.log(err))
+      })
   }
 
   //modal
@@ -84,7 +94,8 @@ export default function UserHomePage() {
 
     <div className="user-homepage">
       <p>Welcome to the Dog Blog  <Link style={linkStyle} to="/">View All Posts</Link> Welcome, {user.first_name} {user.last_name}</p>
-      <p><Button sx={{ color: '#61dafb' }} size="small" onClick={handleOpen}>New Post</Button>
+      <p>
+        <Button sx={{ color: '#61dafb' }} size="small" onClick={handleOpen}>New Post</Button>
         <Modal
           open={open}
           onClose={handleClose}
@@ -115,7 +126,8 @@ export default function UserHomePage() {
 
             </Typography>
           </Box>
-        </Modal></p>
+        </Modal>
+      </p>
 
 
       {userPosts.map((post) => <AuthUserBasicCard key={post.id} post={post} />)}

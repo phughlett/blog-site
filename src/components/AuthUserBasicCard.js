@@ -24,7 +24,7 @@ export default function AuthUserBasicCard({ post }) {
   const [content, setContent] = React.useState(post.content)
 
 
-  let { BASE_URL, routeURL, navigate } = React.useContext(AppContext);
+  let { BASE_URL, routeURL, navigate, setUserPosts, user } = React.useContext(AppContext);
 
   let created = new Date(post.created_at);
   let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
@@ -66,85 +66,108 @@ export default function AuthUserBasicCard({ post }) {
       body
     })
       .then(response => response.json())
-      .catch(err => console.log(err))
-
-  }
-
-  let deletePost = (e) => {
-    e.preventDefault()
-
-    fetch(`${BASE_URL}/posts/${post.id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-
-    })
-      .then(response => response.json())
       .then(() => {
         handleClose()
-        navigate(routeURL)
+        fetch(`${BASE_URL}/users/${user.id}/posts`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(data => data.reverse())
+          .then(reverse => setUserPosts(reverse))
+          .catch(err => console.log(err))
       })
-      .catch(err => console.log(err))
-  }
+      .catch (err => console.log(err))
+
+}
+
+let deletePost = (e) => {
+  e.preventDefault()
+
+  fetch(`${BASE_URL}/posts/${post.id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+
+  })
+    .then(response => response.json())
+    .then(() => {
+      handleClose()
+      navigate(routeURL)
+      fetch(`${BASE_URL}/users/${user.id}/posts`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(data => data.reverse())
+        .then(reverse => setUserPosts(reverse))
+        .catch(err => console.log(err))
+    })
+    .catch(err => console.log(err))
+}
 
 
 
 
 
 
-  return (
-    <Card variant="outlined" sx={{ minWidth: 345, maxWidth: 1800, width: '100%', backgroundColor: '#30333a', border: 'solid 1px rgb(138 165 162 / 36%)', margin: '.25em' }}>
-      <CardContent>
-        <Typography sx={{ fontSize: 14, }} color="text.secondary" gutterBottom>
+return (
+  <Card variant="outlined" sx={{ minWidth: 345, maxWidth: 1800, width: '100%', backgroundColor: '#30333a', border: 'solid 1px rgb(138 165 162 / 36%)', margin: '.25em' }}>
+    <CardContent>
+      <Typography sx={{ fontSize: 14, }} color="text.secondary" gutterBottom>
 
-        </Typography>
-        <Typography variant="h5" sx={{ color: 'white', fontWeight: "bold" }} component="div">
-          {post.title}
-        </Typography>
-        <Typography sx={{ mb: 1.5 }} color="rgb(138 165 162 / 36%)">
-          Posted at {time} on {date}
-        </Typography>
-        <Typography sx={{ color: 'white' }} variant="body2">
-          {post.content}
-        </Typography>
-      </CardContent>
-      <CardActions sx={{}}>
-        <Button sx={{ color: '#61dafb' }} size="small" onClick={handleOpen}>Edit</Button>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              <form>
-                <label style={{
-                  textAlign: 'left',
-                  color: 'white',
-                  fontFamily: '"Roboto","Helvetica","Arial",sans-serif'
-                }}>
-                  Title
-                </label>
-                <input style={{ backgroundColor: '#30333a', color: 'white', width: '394px' }} placeholder={post.title} onChange={(e) => setTitle(e.target.value)}></input><br />
-                <label style={{
-                  textAlign: 'left',
-                  color: 'white',
-                  fontFamily: '"Roboto","Helvetica","Arial",sans-serif'
-                }}>Content </label>
-                <textarea style={{ backgroundColor: '#30333a', color: 'white', fontFamily: '"Roboto","Helvetica","Arial",sans-serif', width: '394px', height: '186px', resize: 'none' }} value={content} onChange={(e) => setContent(e.target.value)} /><br />
-                <Button variant="contained" color="success" type="submit" onClick={(e) => updatePost(e)}>Update</Button>
-                <Button style={{ float: 'right' }} variant="contained" color="error" onClick={e => deletePost(e)}>Delete</Button>
-              </form>
+      </Typography>
+      <Typography variant="h5" sx={{ color: 'white', fontWeight: "bold" }} component="div">
+        {post.title}
+      </Typography>
+      <Typography sx={{ mb: 1.5 }} color="rgb(138 165 162 / 36%)">
+        Posted at {time} on {date}
+      </Typography>
+      <Typography sx={{ color: 'white' }} variant="body2">
+        {post.content}
+      </Typography>
+    </CardContent>
+    <CardActions sx={{}}>
+      <Button sx={{ color: '#61dafb' }} size="small" onClick={handleOpen}>Edit</Button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            <form>
+              <label style={{
+                textAlign: 'left',
+                color: 'white',
+                fontFamily: '"Roboto","Helvetica","Arial",sans-serif'
+              }}>
+                Title
+              </label>
+              <input style={{ backgroundColor: '#30333a', color: 'white', width: '394px' }} placeholder={post.title} onChange={(e) => setTitle(e.target.value)}></input><br />
+              <label style={{
+                textAlign: 'left',
+                color: 'white',
+                fontFamily: '"Roboto","Helvetica","Arial",sans-serif'
+              }}>Content </label>
+              <textarea style={{ backgroundColor: '#30333a', color: 'white', fontFamily: '"Roboto","Helvetica","Arial",sans-serif', width: '394px', height: '186px', resize: 'none' }} value={content} onChange={(e) => setContent(e.target.value)} /><br />
+              <Button variant="contained" color="success" type="submit" onClick={(e) => updatePost(e)}>Update</Button>
+              <Button style={{ float: 'right' }} variant="contained" color="error" onClick={e => deletePost(e)}>Delete</Button>
+            </form>
 
-            </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            </Typography>
-          </Box>
-        </Modal>
-      </CardActions>
-    </Card >
-  );
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+          </Typography>
+        </Box>
+      </Modal>
+    </CardActions>
+  </Card >
+);
 
 }
