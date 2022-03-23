@@ -36,7 +36,7 @@ export default function SinglePost() {
 
     <div className="single-homepage">
       <p>
-        Welcome to the Dog Blog {user.id > 0 ? <><Link style={linkStyle} to="/">View All Posts</Link> Welcome, {user.first_name} {user.last_name}</> : <><Link style={linkStyle} to="/">View All Posts</Link><Link style={linkStyle} to="/login">Login Here</Link> <Link style={linkStyle} to="/create">Create an Account</Link></>}
+        Welcome to the Dog Blog {user.id > 0 ? <><Link style={linkStyle} to="/">View All Posts</Link> Welcome, {user.first_name} {user.last_name}</> : <><Link style={linkStyle} to="/">View All Posts</Link><Link style={linkStyle} to="/login">Login Here</Link> <Link style={linkStyle} to="/signup">Create an Account</Link></>}
       </p>
       <BasicUserCard key={singlePost.id} post={singlePost} />
 
