@@ -22,6 +22,19 @@ export default function Homepage() {
     .catch(err => console.log(err))
   }, [])
 
+  posts.forEach((post) => {
+    let str = ''
+    str = post.content
+    if (str.length > 100){
+      str = str.slice(0,99)
+      str = `${str}...`
+    }
+
+    post.content = str
+  })
+
+
+
 
 
 
