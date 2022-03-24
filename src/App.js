@@ -124,7 +124,6 @@ function App() {
   return (
 
     <AppContext.Provider value={contextObj}>
-
       <Routes>
         <Route path='/' element={<Homepage />} />
         <Route path='/login' element={<Login />} />
